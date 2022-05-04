@@ -2,7 +2,7 @@ import requests
 import telebot
 from bs4 import BeautifulSoup
 
-bot = telebot.TeleBot('тут ключ бота должен быть')
+bot = telebot.TeleBot('5329557098:AAHu6o8VYANX_irPSnPIcFdfuvbVLnE5USk')
 urlquotes = 'https://citaty.info/random'
 urlimages = 'https://www.generatormix.com/random-image-generator'
 urljokes = 'https://newostrie.ru/anec-random'
