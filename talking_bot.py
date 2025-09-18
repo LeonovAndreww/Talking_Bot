@@ -22,7 +22,12 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id,
                          "Все функции бота управляются при помощи кнопок, но, в случае чего, ниже есть список команд: \n /help \n Привет \n Цитата \n Картинка \n Анекдот \n Погода")
     elif text == "цитата":
-        qresponse = requests.get(urlquotes, headers=headers)
+        try:
+            qresponse = requests.get(urlquotes, headers=headers)
+            qresponse.raise_for_status()
+        except requests.RequestException as e:
+            bot.send_message(message.from_user.id, f"Ошибка при получении данных: {e}")
+            return
         qsoup = BeautifulSoup(qresponse.text, 'lxml')
         quotes_block = qsoup.find('div', class_='field-name-body')
         if quotes_block:
