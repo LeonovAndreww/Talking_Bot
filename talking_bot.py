@@ -23,7 +23,7 @@ def get_text_messages(message):
                          "Все функции бота управляются при помощи кнопок, но, в случае чего, ниже есть список команд: \n /help \n Привет \n Цитата \n Картинка \n Анекдот \n Погода")
     elif text == "цитата":
         try:
-            qresponse = requests.get(urlquotes, headers=headers)
+            qresponse = requests.get(urlquotes, headers=headers, timeout=5)
             qresponse.raise_for_status()
         except requests.RequestException as e:
             bot.send_message(message.from_user.id, f"Ошибка при получении данных: {e}")
@@ -41,7 +41,7 @@ def get_text_messages(message):
             bot.send_message(message.from_user.id, "Не удалось получить цитату. Попробуй позже.")
 
     elif text == 'картинка':
-        iresponse = requests.get(urlimages)
+        iresponse = requests.get(urlimages, timeout=5)
         isoup = BeautifulSoup(iresponse.text, 'lxml')
         iimage = isoup.find('img', class_='lazy thumbnail')
         if iimage and 'data-src' in iimage.attrs:
@@ -50,7 +50,7 @@ def get_text_messages(message):
             bot.send_message(message.from_user.id, "Не удалось получить картинку.")
 
     elif text == 'анекдот':
-        jresponse = requests.get(urljokes)
+        jresponse = requests.get(urljokes, timeout=5)
         jsoup = BeautifulSoup(jresponse.text, 'lxml')
         joke = jsoup.find('div', class_='value p-3')
         if joke:
